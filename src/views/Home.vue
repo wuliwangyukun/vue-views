@@ -1,22 +1,19 @@
 <template>
   <div class="home">
     <tags-input v-model="tags">
-      <span slot="tag" slot-scope="{ tag,removeTag }" class="tags-input-tag">
-        {{tag}}
-        <button type="button" class="tags-input-remove" @click="removeTag(tag)">&times;</button>
-      </span>
+      <div slot-scope="{ tag,removeTag,inputBindings,inputEventHandlers }">
+        <input id="tags-input-text" placeholder="add tags..."
+          v-bind="inputBindings"
+          v-on="inputEventHandlers"
+        >
 
-      <input slot="input" slot-scope="{bindings,eventHandlers}" id="tags-input-text" placeholder="add tags..."
-          v-bind="bindings"
-          v-on="eventHandlers"
-      >
-      <!-- <input slot="input" slot-scope="{newTag,onInput,handleTagBackspace,addTag}" id="tags-input-text"
-          placeholder="add tags..."
-          :value="newTag"
-          @input="onInput"
-          @keydown.backspace="handleTagBackspace"
-          @keydown.enter.prevent="addTag"
-      > -->
+        <div>
+          <span class="tags-input-tag" v-for="tag in tags">
+            {{tag}}
+            <button type="button" class="tags-input-remove" @click="removeTag(tag)">&times;</button>
+          </span>
+        </div>
+      </div>
     </tags-input>
   </div>
 </template>
