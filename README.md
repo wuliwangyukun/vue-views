@@ -1,4 +1,4 @@
-# w-view
+# v-views
 
 ## Project setup
 ```
