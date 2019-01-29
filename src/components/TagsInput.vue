@@ -1,36 +1,52 @@
-<template>
-    <div class="tags-input">
-        <slot
-            :tags="tags"
-            :removeTag="removeTag"
-            :input-bindings="{
-                value: newTag
-            }"
-            :input-event-handlers="{
-                input:(e)=>{newTag=e.target.value},
-                keydown:(e)=>{
-                    if(e.keyCode===8){
-                        this.handleTagBackspace();
-                    }
-                    if(e.keyCode===13){
-                        this.addTag();
-                    }
-                }
-            }"
-        >
-        </slot>
-    </div>
-</template>
+
 
 <script>
-// <slot name="tag">
-
-// <slot/>
-// <slot name="input">
-    
-// <slot/> 
+// <template>
+//     <div class="tags-input">
+//         <slot
+//             :tags="tags"
+//             :removeTag="removeTag"
+//             :input-bindings="{
+//                 value: newTag
+//             }"
+//             :input-event-handlers="{
+//                 input:(e)=>{newTag=e.target.value},
+//                 keydown:(e)=>{
+//                     if(e.keyCode===8){
+//                         this.handleTagBackspace();
+//                     }
+//                     if(e.keyCode===13){
+//                         this.addTag();
+//                     }
+//                 }
+//             }"
+//         >
+//         </slot>
+//     </div>
+// </template>
     export default {
         name:'TagsInput',
+        render() {
+            return this.$scopedSlots.default({
+                tags:this.tags,
+                removeTag:this.removeTag,
+                inputBindings:{
+                    value: this.newTag
+                },
+                inputEventHandlers:{
+                    input:(e)=>{this.newTag=e.target.value},
+                    keydown:(e)=>{
+                        if(e.keyCode===8){
+                            this.handleTagBackspace();
+                        }
+                        if(e.keyCode===13){
+                            e.preventDefault();
+                            this.addTag();
+                        }
+                    }
+                }
+            })
+        },
         model:{
             prop:'tags',
             event:'update'
@@ -48,6 +64,8 @@
                 }
             },
             addTag(){
+                console.log(this.newTag);
+                
                 if(this.newTag.trim().length===0||this.tags.includes(this.newTag)) {
                     return;
                 }
